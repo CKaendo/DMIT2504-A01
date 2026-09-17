@@ -8,3 +8,14 @@ Future<dynamic> getJSON(String urlString) async {
   final response = await http.get(url);   // http package fires only async HTTP requests, so we await
   return jsonDecode(response.body);
 }
+
+// Now that I have that generic function, I can make life easier for myself by making endpoint-specific functions
+// that wrap around getJSON:
+
+String API_BASE_URL = 'https://freedictionaryapi.com/api/v1';
+
+Future<String> getWordDefinition(String word) async {
+  final urlString = '${API_BASE_URL}/entries/en/${word}';
+  var data        = getJSON(urlString);
+  return data['entries'][0]['senses'][0]['definition'];
+}
