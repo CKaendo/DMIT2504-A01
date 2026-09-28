@@ -88,11 +88,17 @@ class MyApp extends StatelessWidget {
    which means I can create a reusable component.
 */
 class ListWithHeading extends StatelessWidget {
-  /* What do I need in here? What input requirements, what goals to fulfill?
+  // What do I need in here? What input requirements, what goals to fulfill?
 
-    1. I need a constructor, which takes in a String for heading + a List<String> for contents + super.key
-    2. I need class attributes for heading + contents to store the inputs
-    3. I need a build method to create the actual element tree, which I'm just going to yoink
-       from the existing code.
-  */
+    // 1. I need a constructor, which takes in a String for heading + a List<String> for list items + super.key
+    const ListWithHeading({
+      super.key,
+      required this.heading,
+      required this.listItems,
+    });
+    
+    // 2. I need class attributes for heading + contents to store the inputs
+    final String       heading;
+    final List<String> listItems;
+    // 3. I need a build method to create the actual element tree, which I'm just going to yoink from the existing code.
 }
