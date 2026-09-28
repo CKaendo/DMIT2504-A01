@@ -14,7 +14,8 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         backgroundColor: Colors.blueGrey.shade200,
         body: Column(
-          children: [ 
+          children: [
+
             Padding(
               padding: EdgeInsets.all(16.0),
               child: const Text(
@@ -25,10 +26,25 @@ class MyApp extends StatelessWidget {
                 ),
               ),
             ),
+
             Image.asset(
               'assets/images/cool.jpg',
               height: 400,
             ),
+
+            Text(
+              'Ingredients',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text("- 500g Eye of Newt"),
+            ),
+
           ],
         ),
       ),
