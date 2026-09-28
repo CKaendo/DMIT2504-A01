@@ -36,26 +36,24 @@ class MyApp extends StatelessWidget {
               height: 400,
             ),
 
+            ListWithHeading(
+              heading: "Ingredients",
+              listItems: [
+                "- 500g eye of newt",
+                "- 150g fang of bat",
+                "- 1/4 cup salted butter",
+                "- 5lbs whey protein isolate",
+              ]
+            ),
 
-
-            Padding(
-              padding: EdgeInsets.all(32.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-
-                  Text(
-                    'Instructions',
-                    textAlign: TextAlign.center,
-                    style: sectionHeadingStyle,
-                  ),
-
-                  Text("1. click heels three times"),
-                  Text("2. mix all ingredients"),
-                  Text("3. dunk face in mixture"),
-                  Text("4. serve (chilled)"),
-                ],
-              ),
+            ListWithHeading(
+              heading: "Instructions",
+              listItems: [
+                  "1. click heels three times",
+                  "2. mix all ingredients",
+                  "3. dunk face in mixture",
+                  "4. serve (chilled)",
+              ]
             ),
 
           ],  
@@ -100,10 +98,6 @@ class ListWithHeading extends StatelessWidget {
           ),
 
           for (final item in listItems) Text(item),
-          // Text("- 500g eye of newt"),
-          // Text("- 150g fang of bat"),
-          // Text("- 1/4 cup salted butter"),
-          // Text("- 5lbs whey protein isolate"),
         ],
       ),
     );
