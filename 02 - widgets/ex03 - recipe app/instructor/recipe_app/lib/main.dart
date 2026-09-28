@@ -14,12 +14,15 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         backgroundColor: Colors.blueGrey.shade200,
         body: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch, // stretch basically givesd you flexbox logic
+                                                          // .stretch alignment means children fill entire width
           children: [
 
             Padding(
               padding: EdgeInsets.all(16.0),
               child: const Text(
                 "my cool recipe app",
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.bold,
@@ -34,6 +37,7 @@ class MyApp extends StatelessWidget {
 
             Text(
               'Ingredients',
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -45,7 +49,7 @@ class MyApp extends StatelessWidget {
               child: Text("- 500g Eye of Newt"),
             ),
 
-          ],
+          ],  
         ),
       ),
     );
