@@ -37,25 +37,7 @@ class MyApp extends StatelessWidget {
               height: 400,
             ),
 
-            Padding(
-              padding: EdgeInsets.all(32.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
 
-                  Text(
-                    'Ingredients',
-                    textAlign: TextAlign.center,
-                    style: sectionHeadingStyle,
-                  ),
-
-                  Text("- 500g eye of newt"),
-                  Text("- 150g fang of bat"),
-                  Text("- 1/4 cup salted butter"),
-                  Text("- 5lbs whey protein isolate"),
-                ],
-              ),
-            ),
 
             Padding(
               padding: EdgeInsets.all(32.0),
@@ -90,15 +72,19 @@ class MyApp extends StatelessWidget {
 class ListWithHeading extends StatelessWidget {
   // What do I need in here? What input requirements, what goals to fulfill?
 
-    // 1. I need a constructor, which takes in a String for heading + a List<String> for list items + super.key
-    const ListWithHeading({
-      super.key,
-      required this.heading,
-      required this.listItems,
-    });
-    
-    // 2. I need class attributes for heading + contents to store the inputs
-    final String       heading;
-    final List<String> listItems;
-    // 3. I need a build method to create the actual element tree, which I'm just going to yoink from the existing code.
+  // 1. I need a constructor, which takes in a String for heading + a List<String> for list items + super.key
+  const ListWithHeading({
+    super.key,
+    required this.heading,
+    required this.listItems,
+  });
+  
+  // 2. I need class attributes for heading + contents to store the inputs
+  final String       heading;
+  final List<String> listItems;
+  
+  // 3. I need a build method to create the actual element tree, which I'm just going to yoink from the existing code.
+  
+
+
 }
