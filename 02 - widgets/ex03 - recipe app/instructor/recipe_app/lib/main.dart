@@ -12,7 +12,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     const mainHeadingStyle    = TextStyle(fontSize: 32, fontWeight: FontWeight.bold);
-    const sectionHeadingStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
 
     return MaterialApp(
       home: Scaffold(
@@ -82,9 +81,33 @@ class ListWithHeading extends StatelessWidget {
   // 2. I need class attributes for heading + contents to store the inputs
   final String       heading;
   final List<String> listItems;
-  
+
+  static const sectionHeadingStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
+
   // 3. I need a build method to create the actual element tree, which I'm just going to yoink from the existing code.
-  
+  @override
+  Widget build(BuildContext context) {
+    return Padding( 
+      padding: EdgeInsets.all(32.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+
+          Text(
+            heading,
+            textAlign: TextAlign.center,
+            style: sectionHeadingStyle,
+          ),
+
+          for (final item in listItems) Text(item),
+          // Text("- 500g eye of newt"),
+          // Text("- 150g fang of bat"),
+          // Text("- 1/4 cup salted butter"),
+          // Text("- 5lbs whey protein isolate"),
+        ],
+      ),
+    );
+  }
 
 
 }
