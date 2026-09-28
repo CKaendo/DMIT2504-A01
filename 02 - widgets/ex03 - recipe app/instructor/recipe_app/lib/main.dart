@@ -10,6 +10,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
+    const mainHeadingStyle    = TextStyle(fontSize: 32, fontWeight: FontWeight.bold);
+    const sectionHeadingStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
+
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.blueGrey.shade200,
@@ -24,10 +28,7 @@ class MyApp extends StatelessWidget {
               child: const Text(
                 "my cool recipe app",
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: mainHeadingStyle,
               ),
             ),
 
@@ -45,10 +46,7 @@ class MyApp extends StatelessWidget {
                   Text(
                     'Ingredients',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: sectionHeadingStyle,
                   ),
 
                   Text("- 500g eye of newt"),
@@ -68,10 +66,7 @@ class MyApp extends StatelessWidget {
                   Text(
                     'Instructions',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: sectionHeadingStyle,
                   ),
 
                   Text("1. click heels three times"),
