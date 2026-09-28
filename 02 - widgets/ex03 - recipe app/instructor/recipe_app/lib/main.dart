@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         backgroundColor: Colors.blueGrey.shade200,
         body: Column(
+          spacing: 10.0,
           crossAxisAlignment: CrossAxisAlignment.stretch, // stretch basically givesd you flexbox logic
                                                           // .stretch alignment means children fill entire width
           children: [
@@ -35,18 +36,50 @@ class MyApp extends StatelessWidget {
               height: 400,
             ),
 
-            Text(
-              'Ingredients',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+            Padding(
+              padding: EdgeInsets.all(32.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+
+                  Text(
+                    'Ingredients',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                  Text("- 500g eye of newt"),
+                  Text("- 150g fang of bat"),
+                  Text("- 1/4 cup salted butter"),
+                  Text("- 5lbs whey protein isolate"),
+                ],
               ),
             ),
 
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text("- 500g Eye of Newt"),
+            Padding(
+              padding: EdgeInsets.all(32.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+
+                  Text(
+                    'Instructions',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                  Text("1. click heels three times"),
+                  Text("2. mix all ingredients"),
+                  Text("3. dunk face in mixture"),
+                  Text("4. serve (chilled)"),
+                ],
+              ),
             ),
 
           ],  
