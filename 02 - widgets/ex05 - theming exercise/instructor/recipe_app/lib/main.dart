@@ -18,18 +18,10 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       theme: ThemeData(
-        /* this by itself won't affect my actual colours.
-           it is simply generating an internally coherent colour palette
-           based on one or more seed colours
-        */
         colorScheme: colorScheme,
         scaffoldBackgroundColor: colorScheme.primary,
       ),
       home: Scaffold(
-        // however, we still don't get pink, because that spec is being overwritten here!
-        // in other words, you can overwrite styling downstream/later on in the tree,
-        // the same as anything else in programming, e.g.: {shrek: "love", shrek: "life"}
-        backgroundColor: Colors.blueGrey.shade200,
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch, // like a flexbox!
                               // .stretch alignment means children fill the entire width
