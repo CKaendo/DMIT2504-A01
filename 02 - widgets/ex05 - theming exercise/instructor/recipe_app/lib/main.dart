@@ -12,6 +12,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return MaterialApp(
+      theme: ThemeData(
+        /* this by itself won't affect my actual colours.
+           it is simply generating an internally coherent colour palette
+           based on one or more seed colours
+        */
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.pink,
+        )
+      ),
       home: Scaffold(
         backgroundColor: Colors.blueGrey.shade200,
         body: Column(
@@ -21,7 +30,7 @@ class MyApp extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(16.0),
               child: const Text(
-                'My Recipe App',
+                'my cool recipe app',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 32,
