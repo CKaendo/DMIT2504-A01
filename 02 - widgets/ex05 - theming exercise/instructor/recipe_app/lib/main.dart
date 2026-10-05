@@ -14,12 +14,19 @@ class MyApp extends StatelessWidget {
     // If I want to reference the color scheme in component-specific props in the theme data,
     // I need to create the colorScheme ahead of time, otherwise it's being created at the same time as
     // other ThemeData props are trying to reference it.
-    final colorScheme = ColorScheme.fromSeed(seedColor: Colors.pink);
+    final colorScheme = ColorScheme.fromSeed(
+      seedColor: Colors.pink,
+      brightness: Brightness.dark,
+    );
 
     return MaterialApp(
       theme: ThemeData(
         colorScheme: colorScheme,
-        scaffoldBackgroundColor: colorScheme.primary,
+        scaffoldBackgroundColor: colorScheme.primaryContainer,
+        // in class, we talked about considering the difference between e.g.
+        // using a primary colour directly, or things like primaryContainer, onPrimary, etc. (see docs),
+        // and helps illustrate why it's important to consider those relationships (play with component <-> colours)
+
       ),
       home: Scaffold(
         body: Column(
