@@ -28,49 +28,61 @@ class MyApp extends StatelessWidget {
         // and helps illustrate why it's important to consider those relationships (play with component <-> colours)
 
       ),
-      home: Scaffold(
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch, // like a flexbox!
-                              // .stretch alignment means children fill the entire width
-          children: [
-            Padding(
-              padding: EdgeInsets.all(16.0),
-              child: const Text(
-                'my cool recipe app',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                )
-              ),
+      home: RecipePage(),
+    );
+  }
+}
+
+
+class RecipePage extends StatelessWidget {
+
+  const RecipePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch, // like a flexbox!
+                            // .stretch alignment means children fill the entire width
+        children: [
+          Padding(
+            padding: EdgeInsets.all(16.0),
+            child: const Text(
+              'my cool recipe app',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+              )
             ),
-            Image.asset(
-              'assets/images/cool.jpg',
-              height: 480,
-            ),
-            const ListWithHeading(
-              heading: "Ingredients",
-              listItems: [
-                "- some ingredient",
-                "- some ingredient",
-                "- some ingredient",
-                "- some ingredient",
-                "- some ingredient",
-              ]
-            ),
-            const ListWithHeading(
-              heading: "Instructions",
-              listItems: [
-                '1. take your cream and behold it',
-                '2. whip it good',
-                '3. dip a strawberry',
-              ]
-            ),
-          ],
-        ),
+          ),
+          Image.asset(
+            'assets/images/cool.jpg',
+            height: 480,
+          ),
+          const ListWithHeading(
+            heading: "Ingredients",
+            listItems: [
+              "- some ingredient",
+              "- some ingredient",
+              "- some ingredient",
+              "- some ingredient",
+              "- some ingredient",
+            ]
+          ),
+          const ListWithHeading(
+            heading: "Instructions",
+            listItems: [
+              '1. take your cream and behold it',
+              '2. whip it good',
+              '3. dip a strawberry',
+            ]
+          ),
+        ],
       ),
     );
   }
+
 }
 
 
