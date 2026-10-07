@@ -1,0 +1,16 @@
+{
+  "configVersion": 2,
+  "packages": [
+    {
+      "name": "week_01_dart_demo",
+      "rootUri": "../",
+      "packageUri": "lib/",
+      "languageVersion": "3.13"
+    }
+  ],
+  "generator": "pub",
+  "generatorVersion": "3.13.2",
+  "flutterRoot": "file:///C:/Users/cecil/Desktop/DMIT2504/flutter_windows_3.47.2-stable/flutter",
+  "flutterVersion": "3.47.2",
+  "pubCache": "file:///C:/Users/cecil/AppData/Local/Pub/Cache"
+}
