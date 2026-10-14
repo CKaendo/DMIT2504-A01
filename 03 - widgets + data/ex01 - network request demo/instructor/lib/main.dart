@@ -33,7 +33,7 @@ class MainApp extends StatelessWidget {
     return const MaterialApp(
       home: Scaffold(
         body: Center(
-          child: RandomDogImage(),
+          child: RandomDogImage()
         ),
       ),
     );
@@ -95,9 +95,21 @@ class _RandomDogImageState extends State<RandomDogImage> {
   Widget build(BuildContext context) {
     // ternary gang: conditionally return loading text OR dog image
     // if dogImageUrl=='', show loading text, else show oog image
-    return dogImageUrl.isEmpty 
-      ? const Text("Loading dog...")
-      : Image.network(dogImageUrl);
+    return Column(
+      children: <Widget>[   
+      
+        // child 1: loading text or dog pic
+        dogImageUrl.isEmpty 
+        ? const Text("Loading dog...")
+        : Image.network(dogImageUrl),
+
+        // child 2: press buttan, receive dog
+        ElevatedButton(
+          onPressed: fetchNewDog,
+          child: const Text("fetch new dog (I don't like mine. I want to trade it in)")
+        )
+      ]
+    );
   }
 }
 
