@@ -71,23 +71,25 @@ class _RandomDogImageState extends State<RandomDogImage> {
 
   // refactor dog pic URL fetching into its own function, so i can reuse it
   Future<void> fetchNewDog() async {
-    getRandomDogUrl().then((url) { // similar to how we write callbacks in JS () => {}, just without the arrow
-      // I should check if the component is mounted (make sure widget exists in 'DOM' before injecting data into it)
-      // where is {mounted} coming from? mouse over it / look at docs: https://api.flutter.dev/flutter/widgets/State-class.html      
-      if (!mounted) return; // if this check fails; return out of this function entirely
+    if (!mounted) return;
 
-      setState(() { dogImageUrl = url; });
-      // always use setState() to mutate state so the component re-renders automatically!
-      // remember, the whole point of setters here is to auto-trigger build() (i.e. re-render) from inside the setter when it fires
-      // print(dogImageUrl);
-    });
+    setState(() { dogImageUrl = ''; });  // reset dog state - i want loading text to show + data hygiene
+    final url = await getRandomDogUrl();
+
+    setState(() { dogImageUrl = url; }); // change the dog img url + trigger re-render
+
+    // I can use await now that this is broken out into its own function;
+    // I was forced to use someAsyncFunction().then() in the previous implementation
+    // because initState() can't be async (neither can build()).
   }
+
 
   @override
   void initState() { // think of this as (React equiv.) useEffect that changes state
     super.initState(); 
     fetchNewDog();
   }
+
 
   @override
   Widget build(BuildContext context) {
