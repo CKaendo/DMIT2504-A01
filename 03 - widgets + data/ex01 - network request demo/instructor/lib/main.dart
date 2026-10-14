@@ -84,7 +84,9 @@ class _RandomDogImageState extends State<RandomDogImage> {
   Widget build(BuildContext context) {
     // ternary gang: conditionally return loading text OR dog image
     // if dogImageUrl=='', show loading text, else show oog image
-    return dogImageUrl == '' ? const Text("Loading dog...") : Image.network(dogImageUrl);
+    return dogImageUrl.isEmpty 
+      ? const Text("Loading dog...")
+      : Image.network(dogImageUrl);
   }
 }
 
