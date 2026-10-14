@@ -33,7 +33,7 @@ class MainApp extends StatelessWidget {
     return const MaterialApp(
       home: Scaffold(
         body: Center(
-          child: Placeholder(),
+          child: RandomDogImage(),
         ),
       ),
     );
@@ -52,15 +52,39 @@ class RandomDogImage extends StatefulWidget {
 }
 
 
+
 // instead of const [x, setX] = useState('default value') in React, we...
 class _RandomDogImageState extends State<RandomDogImage> {
   // this is the mutable container
   // the .build() method exists here, *not* up one level in the StatefulWidget itself,
   // because rendering needs direct access to the stateful variables/data.
 
+  String dogImageUrl = '';
+
+  // static method, bc no inputs that change / nothing instance-dependent
+  static Future<String> getRandomDogUrl() async {
+    const dogEndpoint = 'https://dog.ceo/api/breeds/image/random';
+    var response      = await get(Uri.parse(dogEndpoint));
+
+    return jsonDecode(response.body)['message'];
+  }
+
+  @override
+  void initState() { // think of this as (React equiv.) useEffect that changes state
+    super.initState(); 
+    getRandomDogUrl().then((url) { // similar to how we write callbacks in JS () => {}, just without the arrow
+      setState(() { dogImageUrl = url; });
+      // always use setState() to mutate state so the component re-renders automatically!
+      // remember, the whole point of setters here is to auto-trigger build() (i.e. re-render) from inside the setter when it fires
+      // print(dogImageUrl);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    // ternary gang: conditionally return loading text OR dog image
+    // if dogImageUrl=='', show loading text, else show oog image
+    return dogImageUrl == '' ? const Text("Loading dog...") : Image.network(dogImageUrl);
   }
 }
 
@@ -68,14 +92,6 @@ class _RandomDogImageState extends State<RandomDogImage> {
 // class RandomDogImage extends StatelessWidget {
 
 //   const RandomDogImage({super.key});
-
-//   // static method, bc no inputs that change / nothing instance-dependent
-//   static Future<String> getRandomDogUrl() async {
-//     const dogEndpoint = 'https://dog.ceo/api/breeds/image/random';
-//     var response      = await get(Uri.parse(dogEndpoint));
-
-//     return jsonDecode(response.body)['message'];
-//   }
 
 //   @override
 //   Widget build(BuildContext context) {
