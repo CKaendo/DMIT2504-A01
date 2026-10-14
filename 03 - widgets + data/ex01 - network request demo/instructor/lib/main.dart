@@ -18,26 +18,11 @@ import 'package:http/http.dart'; // for HTTP requests e.g. get()
 
 // in flutter,
 //  r - hot reload  - will not re-fire main() function
-//  R - hot restart - (shift+r) *will* re-fire main() function 
-
-// I can't have a stateless widget with an async build method, so I need some other way
-// of setting up my dog URL before showing it:
-String dogImageUrl = '';
+//  R - hot restart - (shift+r) *will* re-fire main() function
 
 
 Future<void> main() async {
-  // separate out the async behaviour from the sync widget rendering
-  dogImageUrl = await RandomDogImage.getRandomDogUrl();
-    runApp(const MainApp());
-
-  /* issues with this:
-      - global scope for locally relevant behaviour is super gross
-      - can't get new dog unless I restart whole app (e.g.: can't refresh account balance w/o restarting entire banking app)
-      - what happens if phone is offline / request fails or hangs: entire app doesn't load soon or ever
-  
-    -> we'll correct this by: using a stateful widget that can fetch and store its own data,
-       and update itself when the data arrives!
-  */
+  runApp(const MainApp());
 }
 
 class MainApp extends StatelessWidget {
@@ -48,28 +33,53 @@ class MainApp extends StatelessWidget {
     return const MaterialApp(
       home: Scaffold(
         body: Center(
-          child: RandomDogImage(),
+          child: Placeholder(),
         ),
       ),
     );
   }
 }
 
-class RandomDogImage extends StatelessWidget {
+
+class RandomDogImage extends StatefulWidget {
+  // 'outer wrapper'. all widgets are more or less immutable, and will be redrawn
 
   const RandomDogImage({super.key});
 
-  // static method, bc no inputs that change / nothing instance-dependent
-  static Future<String> getRandomDogUrl() async {
-    const dogEndpoint = 'https://dog.ceo/api/breeds/image/random';
-    var response      = await get(Uri.parse(dogEndpoint));
+  // so we pack all our stuff inside a mutable comparment
+  @override
+  State<RandomDogImage> createState() => _RandomDogImageState();
+}
 
-    return jsonDecode(response.body)['message'];
-  }
+
+// instead of const [x, setX] = useState('default value') in React, we...
+class _RandomDogImageState extends State<RandomDogImage> {
+  // this is the mutable container
+  // the .build() method exists here, *not* up one level in the StatefulWidget itself,
+  // because rendering needs direct access to the stateful variables/data.
 
   @override
   Widget build(BuildContext context) {
-    return Image.network(dogImageUrl);
+    return const Placeholder();
   }
-
 }
+
+
+// class RandomDogImage extends StatelessWidget {
+
+//   const RandomDogImage({super.key});
+
+//   // static method, bc no inputs that change / nothing instance-dependent
+//   static Future<String> getRandomDogUrl() async {
+//     const dogEndpoint = 'https://dog.ceo/api/breeds/image/random';
+//     var response      = await get(Uri.parse(dogEndpoint));
+
+//     return jsonDecode(response.body)['message'];
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Image.network(dogImageUrl);
+//   }
+
+// }
