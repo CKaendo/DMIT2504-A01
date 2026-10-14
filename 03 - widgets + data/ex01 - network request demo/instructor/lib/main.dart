@@ -73,6 +73,10 @@ class _RandomDogImageState extends State<RandomDogImage> {
   void initState() { // think of this as (React equiv.) useEffect that changes state
     super.initState(); 
     getRandomDogUrl().then((url) { // similar to how we write callbacks in JS () => {}, just without the arrow
+      // I should check if the component is mounted (make sure widget exists in 'DOM' before injecting data into it)
+      // where is {mounted} coming from? mouse over it / look at docs: https://api.flutter.dev/flutter/widgets/State-class.html      
+      if (!mounted) return; // if this check fails; return out of this function entirely
+
       setState(() { dogImageUrl = url; });
       // always use setState() to mutate state so the component re-renders automatically!
       // remember, the whole point of setters here is to auto-trigger build() (i.e. re-render) from inside the setter when it fires
