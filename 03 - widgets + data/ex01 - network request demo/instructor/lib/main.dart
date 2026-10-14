@@ -69,9 +69,8 @@ class _RandomDogImageState extends State<RandomDogImage> {
     return jsonDecode(response.body)['message'];
   }
 
-  @override
-  void initState() { // think of this as (React equiv.) useEffect that changes state
-    super.initState(); 
+  // refactor dog pic URL fetching into its own function, so i can reuse it
+  Future<void> fetchNewDog() async {
     getRandomDogUrl().then((url) { // similar to how we write callbacks in JS () => {}, just without the arrow
       // I should check if the component is mounted (make sure widget exists in 'DOM' before injecting data into it)
       // where is {mounted} coming from? mouse over it / look at docs: https://api.flutter.dev/flutter/widgets/State-class.html      
@@ -82,6 +81,12 @@ class _RandomDogImageState extends State<RandomDogImage> {
       // remember, the whole point of setters here is to auto-trigger build() (i.e. re-render) from inside the setter when it fires
       // print(dogImageUrl);
     });
+  }
+
+  @override
+  void initState() { // think of this as (React equiv.) useEffect that changes state
+    super.initState(); 
+    fetchNewDog();
   }
 
   @override
