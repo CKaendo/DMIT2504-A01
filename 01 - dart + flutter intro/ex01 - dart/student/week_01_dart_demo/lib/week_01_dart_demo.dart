@@ -24,3 +24,7 @@ String prompt(String message) {
   stdout.write(message);
   return stdin.readLineSync()!;
 }
+
+int calculate() {
+  return 42;
+}
