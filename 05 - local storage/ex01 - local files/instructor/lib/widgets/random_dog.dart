@@ -33,7 +33,7 @@ class RandomDogImage extends StatefulWidget {
 }
 
 class _RandomDogImageState extends State<RandomDogImage> {
-  String dogImageUrl = '';
+  String dogImagePath = '';
   int likes = 0;
   int dislikes = 0;
 
@@ -71,11 +71,11 @@ class _RandomDogImageState extends State<RandomDogImage> {
     final file = await _dogFile();
 
     if (await file.exists()) {
-      setState(() { dogImageUrl = file.path; });
+      setState(() { dogImagePath = file.path; });
       // Image.network cannot render from a local path, so we'll have to change the display end too
     } else {
       final url = await getRandomDogUrl();
-      setState(() { dogImageUrl = file.path; });
+      setState(() { dogImagePath = file.path; });
       _saveImage(url);
     }
   }
@@ -90,11 +90,11 @@ class _RandomDogImageState extends State<RandomDogImage> {
   Widget _buildDogImage() {
     Widget childWidget;
 
-    if (dogImageUrl != '') {
+    if (dogImagePath != '') {
       // there are 'safer' or more conceptually correct ways to do this, but this is fine at this level
-      dogImageUrl.startsWith('http')
-      ? childWidget = Image.network(dogImageUrl)
-      : childWidget = Image.file(File(dogImageUrl)); // note: pass the instance (file loaded in as bytes) not the path
+      dogImagePath.startsWith('http')
+      ? childWidget = Image.network(dogImagePath)
+      : childWidget = Image.file(File(dogImagePath)); // note: pass the instance (file loaded in as bytes) not the path
     } else {
       childWidget = const CircularProgressIndicator();
     }
@@ -102,21 +102,21 @@ class _RandomDogImageState extends State<RandomDogImage> {
     return GestureDetector(
       onTap: () {
         getRandomDogUrl().then((url) {
-          _setDogImageUrl(url, true);
+          _setdogImagePath(url, true);
         });
       },
       onLongPress: () {
         getRandomDogUrl().then((url) {
-          _setDogImageUrl(url, false);
+          _setdogImagePath(url, false);
         });
       },
       child: childWidget,
     );
   }
 
-  void _setDogImageUrl(String url, bool liked) {
+  void _setdogImagePath(String url, bool liked) {
     setState(() {
-      dogImageUrl = url;
+      dogImagePath = url;
       if (liked) {
         likes += 1;
       } else {
