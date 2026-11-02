@@ -67,23 +67,34 @@ class _RandomDogImageState extends State<RandomDogImage> {
     debugPrint('Saved dog to: ${file.path}');
   }
 
+  Future<void> _loadInitialDog() async {
+    final file = await _dogFile();
+
+    if (await file.exists()) {
+      setState(() { dogImageUrl = file.path; });
+      // Image.network cannot render from a local path, so we'll have to change the display end too
+    } else {
+      final url = await getRandomDogUrl();
+      setState(() { dogImageUrl = file.path; });
+      _saveImage(url);
+    }
+  }
 
   @override
   void initState() {
     super.initState();
-    getRandomDogUrl().then((url) {
-      setState(() {
-        dogImageUrl = url;
-      });
-      _saveImage(url); // partly why we made it its own function: initState can't be made async
-    });
+    _loadInitialDog();
   }
+
 
   Widget _buildDogImage() {
     Widget childWidget;
 
     if (dogImageUrl != '') {
-      childWidget = Image.network(dogImageUrl);
+      // there are 'safer' or more conceptually correct ways to do this, but this is fine at this level
+      dogImageUrl.startsWith('http')
+      ? childWidget = Image.network(dogImageUrl)
+      : childWidget = Image.file(File(dogImageUrl)); // note: pass the instance (file loaded in as bytes) not the path
     } else {
       childWidget = const CircularProgressIndicator();
     }
