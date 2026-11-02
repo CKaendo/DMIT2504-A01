@@ -26,6 +26,7 @@ import 'package:shared_preferences/shared_preferences.dart';
   2) every time we toggle the setting, write the new value to local cache
   3) when we restart the app, read that value from cache and use it
 
+  NOTE: won't work on browser version of app runtime
 */
 
 void main() {
@@ -68,10 +69,13 @@ class _MainAppState extends State<MainApp> {
     return SwitchListTile(
       title: const Text('Dark Mode'),
       value: _darkMode,
-      onChanged: (value) {
+      onChanged: (value) async {
         setState(() {
           _darkMode = value;
         });
+        // we want to persist the new value to the cache every time it's changed
+        final prefs = await SharedPreferences.getInstance();  // load the shares prefs; uses a singleton pattern
+        await prefs.setBool('darkMode', value);  // set (key, val)
       },
     );
   }
