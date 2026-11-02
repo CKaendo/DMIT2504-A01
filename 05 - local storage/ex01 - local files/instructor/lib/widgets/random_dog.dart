@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:path_provider/path_provider.dart';  // flutter pub add path_provider
+
 
 class RandomDogImage extends StatefulWidget {
   const RandomDogImage({super.key});
