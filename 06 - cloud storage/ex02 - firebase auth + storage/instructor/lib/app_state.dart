@@ -1,5 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart' hide EmailAuthProvider;
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
+// ^ both these libraries ship classes called EmailAuthProvider, which is objectively HORRIBLE
+// libary design especially for two libraries that are meant to be used together.
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
+import 'firebase_options.dart';
+
+
+// TLDR: we have written this class as something that is meant to hold app-wide info (like global prefs, things that need to be init'd before app runs, etc.)
+//       this lets me centralise any initialisation/config behaviour for the app instead of polluting top-level UI widgets with that logic/state
 class ApplicationState extends ChangeNotifier {
 
   // ChangeNotifier is a flutter built-in that allows us to automate subscribing to 'events' (ish)
@@ -12,12 +22,38 @@ class ApplicationState extends ChangeNotifier {
 
   // the thing that blasts out events doesn't have to know about which entities are listening for that event.
   // if you want to learn more about pub-sub: https://medium.com/@me4saurabh4u/publish-subscribe-pub-sub-model-in-depth-3481d973e6ba
-  
 
-  // ----
-  // here we're going to write some logic so that we blast a notification that can be listened/subscribed to
-  // whenever the user's auth state changes (i.e. they sign out, or sign in)
+  ApplicationState() {
+    init();
+  }
 
-  notifyListeners(); // ChangeNotifier().notifyListeners() is what we want here; it blasts the relevant event out
+  bool _loggedIn = false;
+  bool get loggedIn => _loggedIn;
 
+  Future<void> init() async {
+    // make sure firebase connectivity/config is initialised first
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+
+    
+    // initialise firebase auth & the widgets that ship with that library, just with our email provider
+    // if we had more forms of auth we accepted, those would be included too
+    FirebaseUIAuth.configureProviders([
+      EmailAuthProvider(),
+    ]);
+
+    // this can listen for some change for a given user in the auth backend and react accordingly;
+    // any time the user signs in or out, we record that and blast an event about it
+
+
+    FirebaseAuth.instance.userChanges().listen((user) {
+      if (user != null) {
+        _loggedIn = true;
+      } else {
+        _loggedIn = false;
+      }
+      notifyListeners();
+    });
+  }
 }
