@@ -17,9 +17,14 @@ class HomePage extends StatelessWidget {
       body: ListView(
         children: <Widget>[
           const SizedBox(height: 16.0),
+          // the only thing that's different is this ListenableBuilder
+          // this is a flutter built-in that: 1) attaches to some entity that fires ChangeNotifier notifications,
+          //                                  2) rebuilds that part of the element tree accordingly *without* having to make this a stateful widget
+          // if we used a plain `Builder` instead, nothing would update (`Builder` just builds once).
           ListenableBuilder(
-            listenable: authAppState,
-            builder: (context, child) {
+            listenable: authAppState,  // subscribe to this listenable instance.
+                                       // whenever a notifyListeners() is fired from our application state instance,
+            builder: (context, child) {  // this rebuild/re-render will run again
               return authAppState.loggedIn
                   ? ElevatedButton(
                       onPressed: () =>
