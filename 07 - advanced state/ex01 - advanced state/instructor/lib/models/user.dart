@@ -1,4 +1,7 @@
-class User {
+import 'package:flutter/material.dart';
+
+// make User class extend ChangeNotifier, giving us access to notifyListeners()
+class User extends ChangeNotifier {
   User(String firstName, String lastName) {
     this.firstName = firstName;
     this.lastName = lastName;
@@ -17,9 +20,12 @@ class User {
   set firstName(newFirstName) {
     _firstName = newFirstName;
     // addt'l behaviour we want to fire in here (every time name changes) is blasting a notification about the value changing
+    notifyListeners();
+    // "every time something tries to write User().firstName, change the value and yell about that happening to whoever is listening on the other end"
   }
 
   set lastName(newLastName) {
     _lastName = newLastName;
+    notifyListeners();
   }
 }
