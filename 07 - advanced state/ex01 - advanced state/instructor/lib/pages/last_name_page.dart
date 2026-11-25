@@ -23,15 +23,13 @@ class LastNamePage extends StatelessWidget {
             ListenableBuilder(
               listenable: user, // every ListenableBuilder needs a listenable param that is some class extended from ChangeNotifier
               builder: (BuildContext context, Widget? child) => 
-                Text('User name: ${user.firstName}, ${user.lastName}'),
+                Text('User name: ${user.firstName} ${user.lastName}'),
             )          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         // Update our user last name here
-        onPressed: () {
-          //noop;
-        },
+        onPressed: () => user.lastName = 'Surname',
         child: const Icon(Icons.update),
       ),
     );

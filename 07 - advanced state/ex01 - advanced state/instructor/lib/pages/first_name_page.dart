@@ -25,16 +25,17 @@ class FirstNamePage extends StatelessWidget {
             ListenableBuilder(
               listenable: user, // every ListenableBuilder needs a listenable param that is some class extended from ChangeNotifier
               builder: (BuildContext context, Widget? child) => 
-                Text('User name: ${user.firstName}, ${user.lastName}'),
+                Text('User name: ${user.firstName} ${user.lastName}'),
             )
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        // Update our user firs name here
-        onPressed: () {
-          //noop;
-        },
+        // Update our user first name here - let's just update with a fixed value
+        // to prove/observe that shared state changing
+        // -> I should be able to click the button that changes the name on one screen,
+        //    and see that change reflected when I navigate to the other screen that also shows User firstname/lastname.
+        onPressed: () => user.firstName = 'Test',
         child: const Icon(Icons.update),
       ),
     );
