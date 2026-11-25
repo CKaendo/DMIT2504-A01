@@ -29,3 +29,9 @@ class User extends ChangeNotifier {
     notifyListeners();
   }
 }
+
+// notifyListeners() tells every widget currently listening to this object that something changed, so rebuild/rerender
+// we don't need a StatefulWidget anymore, because ChangeNotifier is its own listener mechanism.
+
+// for the receiving end (some widget that needs access to this persistent state), it'll use a ListenableBuilder
+// that is explicitly connected to this User (now 'just' an extension of ChangeNotifier) 
