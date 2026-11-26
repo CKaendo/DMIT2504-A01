@@ -25,6 +25,13 @@ class MainApp extends StatelessWidget {
     // we need to wrap MaterialApp because of the Navigator (router class).
     // it also uses its own shared state under the hood, but *is created in MaterialApp* when MaterialApp instantiates.
     // -> if we didn't, Navigator wouldn't pass down context that can be used by pushed pages to find the UserNotifier
+    
+    // In other words: Navigator is created by MaterialApp. When I push a route, the new page gets a context from the Navigator.
+    // *If* I place UserNotifier *inside* MaterialApp, pages I push onto the route stack won't be able to see it
+    // *because* their context is not capable of reaching above/outside the Navigator.
+    
+    // therefore, I use a Builder to create a new context that sits between UserNotifier and MaterialApp
+    // to ensure that the lookup chaining works.
     return UserNotifier(
       user: user,
       child: Builder(

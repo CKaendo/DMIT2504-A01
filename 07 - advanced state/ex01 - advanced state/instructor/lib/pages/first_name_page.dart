@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 
+import '../context/user_notifier.dart';
 import '../models/user.dart';
 
 
 class FirstNamePage extends StatelessWidget {
-  const FirstNamePage({required this.user, super.key});
-
-  final User user;
+  const FirstNamePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+
+    // I get access to context in the build method, so that's where I'll derive my user!
+    User user = UserNotifier.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('First Name Page'),
@@ -20,10 +23,9 @@ class FirstNamePage extends StatelessWidget {
             SizedBox(
               height: 24.0,
             ),
-            // use a ListenableBuilder to re-render on shared state change
-            // (ListenableBuilder is the receiving end of ChangeNotifier().notifyListeners() )
             ListenableBuilder(
-              listenable: user, // every ListenableBuilder needs a listenable param that is some class extended from ChangeNotifier
+              // what changes here? absolutely nothing.
+              listenable: user,
               builder: (BuildContext context, Widget? child) => 
                 Text('User name: ${user.firstName} ${user.lastName}'),
             )
@@ -31,11 +33,9 @@ class FirstNamePage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        // Update our user first name here - let's just update with a fixed value
-        // to prove/observe that shared state changing
-        // -> I should be able to click the button that changes the name on one screen,
-        //    and see that change reflected when I navigate to the other screen that also shows User firstname/lastname.
-        onPressed: () => user.firstName = 'Test',
+        // nothing changes here either!
+        // the only change we're making is providing access to shared User state through context, rather than lifting & passing state down
+        onPressed: () => user.firstName = 'Surname',
         child: const Icon(Icons.update),
       ),
     );

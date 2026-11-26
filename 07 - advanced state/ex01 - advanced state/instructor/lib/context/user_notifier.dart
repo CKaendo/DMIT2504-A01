@@ -34,7 +34,7 @@ class UserNotifier extends InheritedNotifier<User> {
     final UserNotifier? userNotifier = maybeOf(context);
     // 2. throw an error if we don't find one
     if (userNotifier == null || userNotifier.notifier == null) {
-      throw StateError('UserNotifier: No inherited UserNotifier found in context.')
+      throw StateError('UserNotifier: No inherited UserNotifier found in context.');
     }
     // 3. if we do, return the notifier
     return userNotifier.notifier!; 
@@ -56,5 +56,10 @@ class UserNotifier extends InheritedNotifier<User> {
 
   I'm implementing the maybeOf() just as a safety measure / potential future accommodation for cases where
   UserNotifier *might* not exist and/or I should just be checking first.
+
+  WRAPUP:
+    - we gain: no more prop drilling / lifting state manually. any widget in the tree can grab shared state from context.
+    - we lose: having to write the UserNotifier class ourselves, awkwardly wrapping our entire app in it...
+    -> what would happen if we needed a second piece of shared state? we'd need *another* InheritedNotifier<ForItSpecifically>
 
 */
