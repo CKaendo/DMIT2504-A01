@@ -11,24 +11,34 @@ import 'package:flutter/material.dart'; // InheritedNotifer (context + event-dri
 
 import '../models/user.dart';
 
-class UserNotifier {
+class UserNotifier extends InheritedNotifier<User> {
+  // like State<SomeWidget>, InheritedNotifier has to be specific to a ChangeNotifier instance (e.g. our User)
 
   const UserNotifier({
+    super.key,             // InheritedNotifier is a type of widget, so it has a key
     required User user,    // our User datamodel, which also fires notifiers
     required Widget child, // widget/component that should be nested inside this context
-  });
+  }) : super(notifier: user, child: child);
+  // const SomeClass({ SomeClassAttr: value }) : super(ParentAttr: value) -> forwarding params to the parent class's constructor 
 
   // this will start to look super goofy because we're back to C# levels of 'method bureaucracy'
   // we'll write something that starts to behave like Flutter context you're already familiar with
   // e.g. Theme.of(context) -> goes upwards in the element tree until it finds the theme
   static UserNotifier? maybeOf(BuildContext context) {
     // try to return a UserNotifier instance from context
+    return context.dependOnInheritedWidgetOfExactType<UserNotifier>();
   }
 
   static User of(BuildContext context) {
     // 1. try to find an existing UserNotifier instance to work with
+    final UserNotifier? userNotifier = maybeOf(context);
     // 2. throw an error if we don't find one
+    if (userNotifier == null || userNotifier.notifier == null) {
+      throw StateError('UserNotifier: No inherited UserNotifier found in context.')
+    }
     // 3. if we do, return the notifier
+    return userNotifier.notifier!; 
+    // I tell the compiler 'trust me bro! this won't be null', because I'm throwing prior to this if it is null 
   }
 
 }
@@ -43,5 +53,8 @@ class UserNotifier {
 
   In production code, I would probably only have the .of() method, so I 100% throw an error 
   if there's no UserNotifier I can find above me but my intent is that UserNotifier *must* exist.
+
+  I'm implementing the maybeOf() just as a safety measure / potential future accommodation for cases where
+  UserNotifier *might* not exist and/or I should just be checking first.
 
 */
