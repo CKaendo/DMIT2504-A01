@@ -1,3 +1,7 @@
+// For 3rd version (producer-consumer model, using `provider` library):
+// I should just be deleting this outright, because it's replaced by that library's functionality.
+// I'm leaving this in, so that it's still easily visible in the final product and you can compare against what the library does.
+
 // We're still going to keep that event-driven re-rendering based on state change,
 // *but* create a shared state provider (React: "context (provider)") that components can access
 // data from at will.
