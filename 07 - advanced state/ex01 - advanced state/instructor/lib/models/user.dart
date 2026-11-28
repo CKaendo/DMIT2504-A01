@@ -1,4 +1,7 @@
-class User {
+import 'package:flutter/material.dart';
+
+// make User class extend ChangeNotifier, giving us access to notifyListeners()
+class User extends ChangeNotifier {
   User(String firstName, String lastName) {
     this.firstName = firstName;
     this.lastName = lastName;
@@ -10,11 +13,25 @@ class User {
   String? get firstName => _firstName;
   String? get lastName => _lastName;
 
+  // currently, these private-public field pairs (and getters/setters for them) basically do nothing
+  // the entire point of using private fields with setters - just like rendering automation for state -
+  // is being able to fire additional behaviour whenever we change data (because we're in a function, not
+  // just overwriting the value of an attribute directly)
   set firstName(newFirstName) {
     _firstName = newFirstName;
+    // addt'l behaviour we want to fire in here (every time name changes) is blasting a notification about the value changing
+    notifyListeners();
+    // "every time something tries to write User().firstName, change the value and yell about that happening to whoever is listening on the other end"
   }
 
   set lastName(newLastName) {
     _lastName = newLastName;
+    notifyListeners();
   }
 }
+
+// notifyListeners() tells every widget currently listening to this object that something changed, so rebuild/rerender
+// we don't need a StatefulWidget anymore, because ChangeNotifier is its own listener mechanism.
+
+// for the receiving end (some widget that needs access to this persistent state), it'll use a ListenableBuilder
+// that is explicitly connected to this User (now 'just' an extension of ChangeNotifier) 
